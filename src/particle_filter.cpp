@@ -126,9 +126,10 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
    *   (look at equation 3.33) http://planning.cs.uiuc.edu/node99.html
    */
 
-  // convert observations from local (car) coordinates to global (map) coordinates
+
   vector <LandmarkObs> observations_map;
   for (std::size_t p=0; p<this->particles.size(); p++){
+    // convert observations from local (car) coordinates to global (map) coordinates
     for (std::size_t o=0; o<observations.size(); o++){
       LandmarkObs obs_map;
       obs_map.id = observations[o].id;
@@ -160,7 +161,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
       double mu_x = range_landmarks[observations_map[i].id].x;
       double mu_y = range_landmarks[observations_map[i].id].y;
       double weight_i = multiv_prob(sig_x, sig_y, observations_map[i].x, observations_map[i].y, mu_x, mu_y);
-      particles[p].weight *= weight_i;
+      this->particles[p].weight *= weight_i;
     }
     this->weights.push_back(particles[p].weight);
 
