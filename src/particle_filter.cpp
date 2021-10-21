@@ -163,10 +163,13 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
       double weight_i = multiv_prob(sig_x, sig_y, observations_map[i].x, observations_map[i].y, mu_x, mu_y);
       this->particles[p].weight *= weight_i;
     }
-    this->weights.push_back(particles[p].weight);
-
+    this->weights[p] = this->particles[p].weight;
   }
-
+  //normalize the particle weights
+  auto sum_of_weights = std::accumulate(this->weights.begin(), this->weights.end(), 0.0);
+  for(size_t i=0; i<this->weights.size(); i++){
+    this->weights.at(i) = weights[i]/sum_of_weights;
+  }
 }
 
 void ParticleFilter::resample() {
