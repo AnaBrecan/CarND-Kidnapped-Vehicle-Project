@@ -140,8 +140,8 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
     for (std::size_t o=0; o<observations.size(); o++){
       LandmarkObs obs_map;
       obs_map.id = observations[o].id;
-      obs_map.x = particles[p].x + cos(particles[p].theta) * observations[o].x - sin(particles[p].theta) * observations[p].y;
-      obs_map.y = particles[p].y + sin(particles[p].theta) * observations[o].x + cos(particles[p].theta) * observations[p].y;
+      obs_map.x = particles[p].x + cos(particles[p].theta) * observations[o].x - sin(particles[p].theta) * observations[o].y;
+      obs_map.y = particles[p].y + sin(particles[p].theta) * observations[o].x + cos(particles[p].theta) * observations[o].y;
       observations_map.push_back(obs_map);
       }
 
