@@ -100,6 +100,8 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
    *   probably find it useful to implement this method and use it as a helper
    *   during the updateWeights phase.
    */
+   /*
+
   for (size_t i=0; i<observations.size(); i++){
     double min_dist = std::numeric_limits<double>::max();
     int closest_id = -1;
@@ -113,6 +115,17 @@ void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
     }
     observations[i].id = closest_id;
   }
+  */
+  for (size_t i=0; i<observations.size(); i++){
+    vector<double> landmark_dist;
+    for (size_t j=0; j<predicted.size(); j++){
+      double d = dist(observations[i].x, observations[i].y, predicted[j].x, predicted[j].y);
+      landmark_dist.push_back(d);
+    }
+    int minElementIndex = std::min_element(landmark_dist.begin(), landmark_dist.end()) - landmark_dist.begin();
+    observations[i].id = predicted[minElementIndex].id;
+  }
+
 }
 
 void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
